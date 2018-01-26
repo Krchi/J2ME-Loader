@@ -1,5 +1,6 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
+ * Copyright 2017 Nikita Shakarun
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,67 +17,66 @@
 
 package javax.microedition.lcdui;
 
-import javax.microedition.lcdui.event.SimpleEvent;
-
 import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
-public class StringItem extends Item
-{
+import javax.microedition.lcdui.event.SimpleEvent;
+
+public class StringItem extends Item {
 	private String text;
 	private TextView textview;
-	
-	private SimpleEvent msgSetText = new SimpleEvent()
-	{
-		public void process()
-		{
+	private Font font;
+
+	private SimpleEvent msgSetText = new SimpleEvent() {
+		public void process() {
 			textview.setText(text);
 		}
 	};
-	
-	public StringItem(String label, String text)
-	{
+
+	public StringItem(String label, String text) {
 		this(label, text, PLAIN);
 	}
-	
-	public StringItem(String label, String text, int appearanceMode)
-	{
+
+	public StringItem(String label, String text, int appearanceMode) {
 		setLabel(label);
 		setText(text);
 	}
-	
-	public void setText(String text)
-	{
+
+	public void setText(String text) {
 		this.text = text;
-		
-		if(textview != null)
-		{
+
+		if (textview != null) {
 			ViewHandler.postEvent(msgSetText);
 		}
 	}
-	
-	public String getText()
-	{
+
+	public String getText() {
 		return text;
 	}
-	
-	public View getItemContentView()
-	{
-		if(textview == null)
-		{
+
+	public View getItemContentView() {
+		if (textview == null) {
 			Context context = getOwnerForm().getParentActivity();
-			
+
 			textview = new TextView(context);
 			textview.setTextAppearance(context, android.R.style.TextAppearance_Small);
 			textview.setText(text);
 		}
-		
+
 		return textview;
 	}
-	
-	public void clearItemContentView()
-	{
+
+	public void clearItemContentView() {
 		textview = null;
+	}
+
+	public Font getFont(){
+		return font;
+	}
+
+	public void setFont(Font font){
+		// TODO Implement this method
+		this.font = font;
 	}
 }

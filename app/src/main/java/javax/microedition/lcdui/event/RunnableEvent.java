@@ -1,5 +1,6 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
+ * Copyright 2017 Nikita Shakarun
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,54 +17,41 @@
 
 package javax.microedition.lcdui.event;
 
-import javax.microedition.lcdui.Event;
 import javax.microedition.util.ArrayStack;
 
-public class RunnableEvent extends Event
-{
+public class RunnableEvent extends Event {
 	private static ArrayStack<RunnableEvent> recycled = new ArrayStack();
-	
+
 	private Runnable runnable;
-	
-	private RunnableEvent()
-	{
-	}
-	
-	public static Event getInstance(Runnable runnable)
-	{
+
+	public static Event getInstance(Runnable runnable) {
 		RunnableEvent instance = recycled.pop();
-		
-		if(instance == null)
-		{
+
+		if (instance == null) {
 			instance = new RunnableEvent();
 		}
-		
+
 		instance.runnable = runnable;
-		
+
 		return instance;
 	}
-	
-	public void process()
-	{
+
+	public void process() {
 		runnable.run();
 	}
-	
-	public void recycle()
-	{
+
+	public void recycle() {
 		runnable = null;
 		recycled.push(this);
 	}
-	
-	public void enterQueue()
-	{
+
+	public void enterQueue() {
 	}
-	
-	public void leaveQueue()
-	{
+
+	public void leaveQueue() {
 	}
-	
-	public boolean placeableAfter(Event event)
-	{
+
+	public boolean placeableAfter(Event event) {
 		return true;
 	}
 }

@@ -1,6 +1,7 @@
 /*
  *  MicroEmulator
  *  Copyright (C) 2001-2003 Bartek Teodorczyk <barteo@barteo.net>
+ *  Copyright (C) 2017 Nikita Shakarun
  *
  *  It is licensed under the following two licenses as alternatives:
  *    1. GNU Lesser General Public License (the "LGPL") version 2.1 or any newer version
@@ -24,13 +25,13 @@
 
 package org.microemu.cldc.socket;
 
+import org.microemu.microedition.io.ConnectionImplementation;
+
 import java.io.IOException;
 
-import org.microemu.cldc.ClosedConnection;
+public class Connection implements ConnectionImplementation {
 
-public class Connection implements ClosedConnection {
-
-	public javax.microedition.io.Connection open(String name) throws IOException {
+	public javax.microedition.io.Connection openConnection(String name, int mode, boolean timeouts) throws IOException {
 
 		if (!org.microemu.cldc.http.Connection.isAllowNetworkConnection()) {
 			throw new IOException("No network");

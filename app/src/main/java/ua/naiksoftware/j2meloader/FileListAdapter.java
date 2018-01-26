@@ -1,9 +1,20 @@
-package ua.naiksoftware.j2meloader;
-
-/**
+/*
+ * Copyright 2015-2016 Nickolay Savchenko
  *
- * @author Naik
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
+
+package ua.naiksoftware.j2meloader;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -40,26 +51,26 @@ public class FileListAdapter extends BaseAdapter {
 	}
 
 	public View getView(int position, View view, ViewGroup viewGroup) {
-    	ViewHolder holder;
-        if (view == null) {
-            view = li.inflate(R.layout.list_row, null);
-            holder = new ViewHolder();
-            holder.icon = (ImageView) view.findViewById(R.id.list_image);
-            holder.label = (TextView) view.findViewById(R.id.list_header);
-            holder.sublabel = (TextView) view.findViewById(R.id.list_subheader);
-            view.setTag(holder);
-        } else {
-        	holder = (ViewHolder) view.getTag();
-        }
+		ViewHolder holder;
+		if (view == null) {
+			view = li.inflate(R.layout.list_row, null);
+			holder = new ViewHolder();
+			holder.icon = view.findViewById(R.id.list_image);
+			holder.label = view.findViewById(R.id.list_header);
+			holder.sublabel = view.findViewById(R.id.list_subheader);
+			view.setTag(holder);
+		} else {
+			holder = (ViewHolder) view.getTag();
+		}
 
-        FSItem item = list.get(position);
+		FSItem item = list.get(position);
 
-        holder.icon.setImageResource(item.getImageId());
-        holder.label.setText(item.getName());
-        holder.sublabel.setText(item.getDescription());
+		holder.icon.setImageResource(item.getImageId());
+		holder.label.setText(item.getName());
+		holder.sublabel.setText(item.getDescription());
 
-        return view;
-    }
+		return view;
+	}
 
 	private static class ViewHolder {
 		ImageView icon;

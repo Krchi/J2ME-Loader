@@ -1,39 +1,47 @@
+/*
+ * Copyright 2017 Nikita Shakarun
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.samsung.util;
 
-import android.util.Log;
 import java.io.IOException;
 
 public class AudioClip {
-    public static final int TYPE_MIDI = 3;
-    public static final int TYPE_MMF = 1;
-    public static final int TYPE_MP3 = 2;
+	public static final int TYPE_MIDI = 3;
+	public static final int TYPE_MMF = 1;
+	public static final int TYPE_MP3 = 2;
 
-    public AudioClip(int i, String str) throws IOException {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  com/samsung/util/AudioClip(int p0, java.lang.String p1)");
-    }
+	public AudioClip(int i, String str) throws IOException {
+	}
 
-    public AudioClip(int i, byte[] bArr, int i2, int i3) {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  com/samsung/util/AudioClip(int p0, byte[] p1, int p2, int p3)");
-    }
+	public AudioClip(int i, byte[] bArr, int i2, int i3) {
+	}
 
-    public static boolean isSupported() {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public static  isSupported()");
-        return false;
-    }
+	public static boolean isSupported() {
+		return false;
+	}
 
-    public void pause() {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  pause()");
-    }
+	public void pause() {
+	}
 
-    public void play(int i, int i2) {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  play(int p0, int p1)");
-    }
+	public void play(int i, int i2) {
+	}
 
-    public void resume() {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  resume()");
-    }
+	public void resume() {
+	}
 
-    public void stop() {
-        Log.e("Android Wrapper", "Not Implemented! com/samsung/util/AudioClip :: public  stop()");
-    }
+	public void stop() {
+	}
 }

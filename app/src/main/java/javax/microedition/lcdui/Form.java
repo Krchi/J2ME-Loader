@@ -1,5 +1,7 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
+ * Copyright 2015-2016 Nickolay Savchenko
+ * Copyright 2017-2018 Nikita Shakarun
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,212 +18,180 @@
 
 package javax.microedition.lcdui;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import javax.microedition.util.ContextHolder;
 
-public class Form extends Screen
-{
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import javax.microedition.shell.MicroActivity;
+
+public class Form extends Screen {
 	private ScrollView scrollview;
 	private LinearLayout layout;
-	
+
 	private ArrayList<Item> items = new ArrayList();
 	private ItemStateListener listener;
-	
-	public Form(String title)
-	{
+
+	public Form(String title) {
 		setTitle(title);
 	}
-	
-	public Form(String title, Item[] elements)
-	{
+
+	public Form(String title, Item[] elements) {
 		setTitle(title);
 		items.addAll(Arrays.asList(elements));
 	}
-	
-	public Item get(int index)
-	{
+
+	public Item get(int index) {
 		return items.get(index);
 	}
-	
-	public int size()
-	{
+
+	public int size() {
 		return items.size();
 	}
-	
-	public int append(String text)
-	{
+
+	public int append(String text) {
 		append(new StringItem(null, text));
-		return 0;
+		return items.size() - 1;
 	}
-	
-	public int append(Image img)
-	{
+
+	public int append(Image img) {
 		append(new ImageItem(null, img, ImageItem.LAYOUT_DEFAULT, null));
-		return 0;
+		return items.size() - 1;
 	}
-	
-	public int append(final Item item)
-	{
+
+	public int append(final Item item) {
 		items.add(item);
 		item.setOwnerForm(this);
-		
-		if(layout != null)
-		{
-			// Added by Naik run in UI thread
-			MicroActivity a = getParentActivity();
-			if (a != null) {
-				a.runOnUiThread(new Runnable() {
-						public void run() {
-							layout.addView(item.getItemView());
-						}
-					});
-			}
-		}
-		return 0;
-	}
-	
-	public void insert(final int index, final Item item)
-	{
-		items.add(index, item);
-		item.setOwnerForm(this);
-		
-		if(layout != null)
-		{
-			// Added by Naik run in UI thread
-			MicroActivity a = getParentActivity();
-			if (a != null) {
-				a.runOnUiThread(new Runnable() {
-						public void run() {
-							layout.addView(item.getItemView(), index);
-						}
-				});
-			}
-		}
-	}
-	
-	public void set(final int index, final Item item)
-	{
-		items.set(index, item).setOwnerForm(null);
-		item.setOwnerForm(this);
-		
-		if(layout != null)
-		{
-			// Added by Naik run in UI thread
-			MicroActivity a = getParentActivity();
-			if (a != null) {
-				a.runOnUiThread(new Runnable() {
-						public void run() {
-							layout.removeViewAt(index);
-							layout.addView(item.getItemView(), index);
-						}
-				});
-			}
-		}
-	}
-	
-	public void delete(final int index)
-	{
-		items.remove(index).setOwnerForm(null);
-		
-		if(layout != null)
-		{
-			// Added by Naik run in UI thread
-			MicroActivity a = getParentActivity();
-			if (a != null) {
-				a.runOnUiThread(new Runnable() {
-						public void run() {
-							layout.removeViewAt(index);
-						}
-					});
-			}
-		}
-	}
-	
-	public void deleteAll()
-	{
-		for(Item item : items)
-		{
-			item.setOwnerForm(null);
-		}
-		
-		items.clear();
-		
-		if(layout != null)
-		{
-			// Added by Naik run in UI thread
-			MicroActivity a = getParentActivity();
+
+		if (layout != null) {
+			AppCompatActivity a = getParentActivity();
 			if (a != null) {
 				a.runOnUiThread(new Runnable() {
 					public void run() {
-			    		layout.removeAllViews();
+						layout.addView(item.getItemView());
+					}
+				});
+			}
+		}
+		return items.size() - 1;
+	}
+
+	public void insert(final int index, final Item item) {
+		items.add(index, item);
+		item.setOwnerForm(this);
+
+		if (layout != null) {
+			AppCompatActivity a = getParentActivity();
+			if (a != null) {
+				a.runOnUiThread(new Runnable() {
+					public void run() {
+						layout.addView(item.getItemView(), index);
 					}
 				});
 			}
 		}
 	}
-	
-	public void setItemStateListener(ItemStateListener listener)
-	{
+
+	public void set(final int index, final Item item) {
+		items.set(index, item).setOwnerForm(null);
+		item.setOwnerForm(this);
+
+		if (layout != null) {
+			AppCompatActivity a = getParentActivity();
+			if (a != null) {
+				a.runOnUiThread(new Runnable() {
+					public void run() {
+						layout.removeViewAt(index);
+						layout.addView(item.getItemView(), index);
+					}
+				});
+			}
+		}
+	}
+
+	public void delete(final int index) {
+		items.remove(index).setOwnerForm(null);
+
+		if (layout != null) {
+			AppCompatActivity a = getParentActivity();
+			if (a != null) {
+				a.runOnUiThread(new Runnable() {
+					public void run() {
+						layout.removeViewAt(index);
+					}
+				});
+			}
+		}
+	}
+
+	public void deleteAll() {
+		for (Item item : items) {
+			item.setOwnerForm(null);
+		}
+
+		items.clear();
+
+		if (layout != null) {
+			AppCompatActivity a = getParentActivity();
+			if (a != null) {
+				a.runOnUiThread(new Runnable() {
+					public void run() {
+						layout.removeAllViews();
+					}
+				});
+			}
+		}
+	}
+
+	public void setItemStateListener(ItemStateListener listener) {
 		this.listener = listener;
 	}
-	
-	public void notifyItemStateChanged(Item item)
-	{
-		if(listener != null)
-		{
+
+	public void notifyItemStateChanged(Item item) {
+		if (listener != null) {
 			listener.itemStateChanged(item);
 		}
 	}
-	
-	public View getScreenView()
-	{
-		if(scrollview == null)
-		{
+
+	public View getScreenView() {
+		if (scrollview == null) {
 			Context context = getParentActivity();
-			
+
 			layout = new LinearLayout(context);
 			layout.setOrientation(LinearLayout.VERTICAL);
-			
+
 			scrollview = new ScrollView(context);
 			scrollview.addView(layout);
-			
-			for(Item item : items)
-			{
+
+			for (Item item : items) {
 				layout.addView(item.getItemView());
 			}
 		}
-		
+
 		return scrollview;
 	}
-	
-	public void clearScreenView()
-	{
+
+	public void clearScreenView() {
 		scrollview = null;
 		layout = null;
-		
-		for(Item item : items)
-		{
+
+		for (Item item : items) {
 			item.clearItemView();
 		}
 	}
-	
-	public boolean contextMenuItemSelected(MenuItem menuitem)
-	{
-		for(Item item : items)
-		{
-			if(item.contextMenuItemSelected(menuitem))
-			{
+
+	public boolean contextMenuItemSelected(MenuItem menuitem) {
+		for (Item item : items) {
+			if (item.contextMenuItemSelected(menuitem)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 }

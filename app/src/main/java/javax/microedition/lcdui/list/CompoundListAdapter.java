@@ -1,5 +1,6 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
+ * Copyright 2018 Nikita Shakarun
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,71 +17,63 @@
 
 package javax.microedition.lcdui.list;
 
-import javax.microedition.lcdui.Choice;
-
 import android.R.layout;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
+import android.widget.CheckedTextView;
 import android.widget.ListAdapter;
 
-public class CompoundListAdapter extends CompoundAdapter implements ListAdapter
-{
+import javax.microedition.lcdui.Choice;
+
+public class CompoundListAdapter extends CompoundAdapter implements ListAdapter {
 	protected int listType;
 	protected int viewResourceID;
 	protected ItemSelector selector;
-	
-	public CompoundListAdapter(Context context, ItemSelector selector, int type)
-	{
+
+	public CompoundListAdapter(Context context, ItemSelector selector, int type) {
 		super(context);
-		
+
 		this.listType = type;
 		this.selector = selector;
-		
-		switch(type)
-		{
+
+		switch (type) {
 			case Choice.IMPLICIT:
 				viewResourceID = layout.simple_list_item_1;
 				break;
-				
+
 			case Choice.EXCLUSIVE:
 				viewResourceID = layout.simple_list_item_single_choice;
 				break;
-				
+
 			case Choice.MULTIPLE:
 				viewResourceID = layout.simple_list_item_multiple_choice;
 				break;
-				
+
 			default:
 				throw new IllegalArgumentException("list type " + type + " is not supported");
 		}
-		
-		if(type != Choice.IMPLICIT && selector == null)
-		{
+
+		if (type != Choice.IMPLICIT && selector == null) {
 			throw new IllegalArgumentException("ItemSelector is requered for this list type");
 		}
 	}
-	
-	public View getView(int position, View convertView, ViewGroup parent)
-	{
+
+	public View getView(int position, View convertView, ViewGroup parent) {
 		convertView = getView(position, convertView, parent, viewResourceID, true);
-		
-		if(listType != Choice.IMPLICIT && convertView instanceof CompoundButton)
-		{
-			((CompoundButton)convertView).setChecked(selector.isSelected(position));
+
+		if (listType != Choice.IMPLICIT && convertView instanceof CheckedTextView) {
+			((CheckedTextView) convertView).setChecked(selector.isSelected(position));
 		}
-		
+
 		return convertView;
 	}
 
-	public boolean areAllItemsEnabled()
-	{
+	public boolean areAllItemsEnabled() {
 		return true;
 	}
 
-	public boolean isEnabled(int position)
-	{
+	public boolean isEnabled(int position) {
 		return true;
 	}
 }

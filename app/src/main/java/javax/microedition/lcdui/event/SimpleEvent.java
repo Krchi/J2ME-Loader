@@ -1,5 +1,6 @@
 /*
  * Copyright 2012 Kulikov Dmitriy
+ * Copyright 2017 Nikita Shakarun
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,24 +17,17 @@
 
 package javax.microedition.lcdui.event;
 
-import javax.microedition.lcdui.Event;
-
-public abstract class SimpleEvent extends Event
-{
-	public void recycle()
-	{
-	}
-	
-	public void enterQueue()
-	{
-	}
-	
-	public void leaveQueue()
-	{
+public abstract class SimpleEvent extends Event {
+	public void recycle() {
 	}
 
-	public boolean placeableAfter(Event event)
-	{
+	public void enterQueue() {
+	}
+
+	public void leaveQueue() {
+	}
+
+	public boolean placeableAfter(Event event) {
 		return true;
 	}
 }
